@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block css %}
+  {{block.super}}
+{% endblock %}
+{% block js %}
+{% endblock %}
+{% block data %}
+<div class="view_search_data">
+    <h5>All Access Information</h5>
+    <div class="title">
+        <span class="left_t">Search Key</span>
+        <span class="right_t">User IP</span>
+    </div>
+    {% for item in data %}
+        <span class="left">{{item.search_key}}</span>
+        <span class="right">{{item.user_ip}}</span>
+    {% endfor %}
+</div>
+{% endblock %}

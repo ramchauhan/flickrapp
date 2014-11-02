@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+{% load staticfiles %}
+{% block meta%}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+{% endblock %}
+{% block css %}
+    <link href="{% static 'css/main.css' %}" rel="stylesheet" type="text/css"/>
+{% endblock %}
+{% block js %}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+{% endblock %}
+<title>{% block title %}Flickr{% endblock %}</title>
+</head>
+<body>
+    {% block user_links %}
+    <div class="links">
+        <span class="show_data_link"><a href="{% url 'data_info' %}">Show All Data</a></span>
+        <span class="search_result_link"><a href="{% url 'get_photos' %}">Search</a></span>
+    </div>
+    {% endblock %}
+    {% block serach-form %}
+    {% endblock %}
+    {% block result %}
+    {% endblock %}
+    {% block data %}
+    {% endblock %}
+</body> 
+</html>

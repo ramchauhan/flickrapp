@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block js %}
+  {{ block.super }}
+  <script src="{% static 'javascript/ajax_request.js' %}" type="text/javascript"></script>
+{% endblock %}
+{% block result %}
+{% if data %}
+<div class="page_num">Page-1</div>
+<div class="photo_list">
+{% for item in data %}
+  {% autoescape off %}
+    <span class="img_cont {% if forloop.counter|divisibleby:'5' %}last{% endif %}">{{ item }}</span>
+  {% endautoescape %}
+{% endfor %}
+</div>
+
+
+{% if all_pages == page %}
+<div class="no_data_left">That's All </div>
+{% else %}
+<div class="new_search"><span id='{{woe_id}}' data='{{page}}'>SEARCH MORE</span></div>
+{% endif %}
+{% endif %}
+
+
+
+{% if no_data %}
+<div class="no_data">{{no_data}}</div>
+{% endif %}
+{% endblock %}
