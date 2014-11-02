@@ -52,7 +52,12 @@ def get_all_photo(request):
                 db = UserDataForm()
                 instance = db.save(commit=False)
                 instance.search_key = location
-                instance.user_ip =  request.META['REMOTE_ADDR']
+                x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+                if x_forwarded_for:
+                    instance.user_ip = x_forwarded_for.split(',')[-1].strip()
+                else:
+                    instance.user_ip = request.META.get('REMOTE_ADDR')
+
                 instance.save()
             except KeyError:
                 return render(request, 'flickr/photos.html', {'no_data' : 'No record founds!!  try again, for new search',})
