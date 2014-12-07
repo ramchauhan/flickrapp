@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block cources %}
+{% for item in data %}
+<div class="course_data">
+  <a href="course/{{item.url}}/">
+   <span class="course_name">
+      <span style="font-size:18px;width:100%;">{{ item.name}}</span>
+      <br />{{ item.language}}
+   </span>
+   <span class="course_university">{{ item.universtity}}</span>
+   <span class="course_duration">
+         {{ item.startDay}} {{ item.startMonth}},{{ item.startYear}} <br />{{ item.duration}}
+   </span>
+ </a>
+ </div>
+{% endfor %}
+{% endblock %}

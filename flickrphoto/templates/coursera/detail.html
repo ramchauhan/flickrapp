@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block course_detail %}
+{% if details %}
+{% for item in details %}
+<div class="course_data">
+ <span class="image">
+   <span class="title"><h3>{{ item.name}}</h3></span>
+   <img src="{{item.photo}}" alt="course_photo"></img>
+   {% if item.video %}
+   <span class="video">
+     <video width="320" height="240" controls>
+      <source src="http://www.youtube.com/watch?v={{ item.video }}" type="video/mp4">
+     </video>
+   </span>
+   {% endif %}
+ </span>
+ <span class="description">
+   {% autoescape off %}
+      {{ item.aboutTheCourse}}
+   {% endautoescape %}
+   <span class="syllabus">
+    {{ item.courseSyllabus}}
+   </span> 
+  </span>
+</div>
+{% endfor %}
+{% endif %}
+{% endblock %}
+
