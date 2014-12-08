@@ -23,6 +23,7 @@
     <div class="links">
         <span class="show_data_link"><a href="{% url 'data_info' %}">Show All Data</a></span>
         <span class="search_result_link"><a href="{% url 'get_photos' %}">Search</a></span>
+        <span class="search_result_link"><a href="{% url 'courses_data' %}">Cources</a></span>
     </div>
     {% endblock %}
     {% block serach-form %}
@@ -30,6 +31,10 @@
     {% block result %}
     {% endblock %}
     {% block data %}
+    {% endblock %} 
+    {% block cources %}
+    {% endblock %}
+    {% block course_detail %}
     {% endblock %}
 </body> 
 </html>

@@ -2,9 +2,11 @@ import urllib2
 from django.shortcuts import render, render_to_response
 from django.http import HttpResponse
 from django.conf import settings
+from django.views.generic import ListView
 from .forms import PhotoForm, UserDataForm
 from .models import UserData
 import xmltodict
+
 
 api_key = settings.FLICKR_API_KEY
 api_password = settings.FLICKR_API_SECRET
@@ -61,7 +63,6 @@ def get_all_photo(request):
                 instance.save()
             except KeyError:
                 return render(request, 'flickr/photos.html', {'no_data' : 'No record founds!!  try again, for new search',})
-            import pdb; pdb.set_trace()
             photo_list = []
             for item in data:
                 image = "<img src='https://farm%s.staticflickr.com/%s/%s_%s_m.jpg'/>" %(item['@farm'], item['@server'], item['@id'], item['@secret'])
@@ -82,7 +83,6 @@ def ajax_search_view(request):
         reply_photo_data = flicksocket_phptos.read()
         flicksocket_phptos.close()
         all_photos = xmltodict.parse(reply_photo_data)
-        import pdb;pdb.set_trace()
         all_photos['rsp']['photos']['woe_id'] = woe_id
         all_photos['rsp']['photos']['page'] = page_number
         all_photos['rsp']['photos']['all_pages'] = all_photos['rsp']['photos']['@pages']

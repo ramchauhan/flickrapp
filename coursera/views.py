@@ -3,36 +3,31 @@ from django.shortcuts import render_to_response
 import ast
 
 
+
 rest_url = 'https://api.coursera.org/api/catalog.v1/'
+
+
+def get_data(rest_query):
+    post_url = rest_url + rest_query 
+    all_data = urllib2.urlopen(post_url)
+    reply_data = all_data.read()
+    all_data.close()
+    final_data = ast.literal_eval(reply_data)    
+    return final_data['elements']
+
 def get_courses(request):
     courses_data = {}
     courses_list = []
     if request.method == 'GET':
-        #import pdb; pdb.set_trace()
+        import pdb; pdb.set_trace()
         ''' all courses data'''
-        c_url = rest_url + 'courses?fields=name,language&includes=universities,sessions'
-        c_data = urllib2.urlopen(c_url)
-        reply_data = c_data.read()
-        c_data.close()
-        final_data = ast.literal_eval(reply_data)    
-        final_data = final_data['elements']
-
+        final_data = get_data('courses?fields=name,language&includes=universities,sessions')
+        
         ''' fetching the all university data'''
-        u_url = rest_url + 'universities?fields=name,id'
-        u_data = urllib2.urlopen(u_url)
-        u_all_data = u_data.read()
-        u_data.close()
-        u_all_data = ast.literal_eval(u_all_data)    
-        u_all_data = u_all_data['elements']
+        u_all_data = get_data('universities?fields=name,id')
 
         ''' fetching session related data '''
-        s_url = rest_url + 'sessions?fields=durationString,startDay,startMonth,startYear'
-        s_data = urllib2.urlopen(s_url)
-        s_all_data = s_data.read()
-        s_data.close()
-        s_all_data = ast.literal_eval(s_all_data)    
-        s_all_data = s_all_data['elements']
-
+        s_all_data = get_data('sessions?fields=durationString,startDay,startMonth,startYear')
         for data in final_data:
             if data:
                 courses_data['name'] = data.get('name')
@@ -58,12 +53,7 @@ def get_courses(request):
         return render_to_response('coursera/cources.html', {'data' : courses_list})
 
 def course_detail(request, detail):
-    c_url = rest_url + 'courses?fields=name,aboutTheCourse,photo,courseSyllabus,video'
-    c_data = urllib2.urlopen(c_url)
-    reply_data = c_data.read()
-    c_data.close()
-    final_data = ast.literal_eval(reply_data)    
-    final_data = final_data['elements']
+    final_data = get_data('courses?fields=name,aboutTheCourse,photo,courseSyllabus,video')
     final_data = [item for item in final_data if item['shortName'] == detail]
     return render_to_response('coursera/detail.html', {'details' : final_data})
 
